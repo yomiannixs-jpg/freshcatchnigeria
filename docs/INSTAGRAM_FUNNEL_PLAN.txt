@@ -1,0 +1,72 @@
+FreshCatch NG Instagram Funnel
+
+Objective:
+Drive daily seafood orders from Instagram into the website and WhatsApp checkout.
+
+Funnel structure:
+Instagram Reel / Post / Story
+-> Link in bio to FreshCatch NG site
+-> Website product page or WhatsApp order
+-> Checkout
+-> Order tracking and follow-up
+-> Repeat customer message
+
+Daily content system:
+1. Fresh arrival post
+   Caption idea:
+   "Fresh catfish just landed. Same-day delivery in Lagos. Order now."
+
+2. Packaging / hygiene post
+   "Cleaned, packed, and ready for delivery."
+
+3. Craving trigger post
+   "This could be your dinner tonight."
+
+4. Customer proof post
+   "See what customers are saying about our seafood."
+
+5. Bulk order post
+   "Restaurants and food vendors can order in bulk."
+
+6. Scarcity post
+   "Limited fresh stock today."
+
+7. Behind-the-scenes reel
+   "From source to doorstep."
+
+Best profile setup:
+- Name: FreshCatch NG | Seafood Delivery Lagos
+- Bio:
+  Fresh seafood in Lagos
+  Same-day delivery
+  Order below
+- Link in bio:
+  your main website
+- Story highlights:
+  Fresh
+  Prices
+  Delivery
+  Reviews
+  Bulk Orders
+
+DM automation starter:
+Trigger words:
+- order
+- fish
+- prawns
+- seafood
+- price
+
+Reply template:
+"Thanks for messaging FreshCatch NG. To order fresh seafood now, use the link in our bio or go directly to WhatsApp: https://wa.me/2348087156505"
+
+Weekly posting minimum:
+- 4 reels
+- 3 feed posts
+- daily stories
+
+Growth advice:
+- Use real Nigerian seafood photos and videos
+- Show your own packaging and delivery process
+- End every reel with:
+  "Order now from the link in bio"

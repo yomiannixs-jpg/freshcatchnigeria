@@ -1,0 +1,28 @@
+FreshCatch NG Launch Checklist
+
+Admin dashboard:
+- deploy admin.html
+- confirm admin-orders function returns data
+- confirm admin-update-order updates status
+
+Paystack:
+- add PAYSTACK_SECRET_KEY in Netlify
+- test initialize transaction
+- complete a test payment
+- confirm verify endpoint updates Supabase order status
+
+Instagram:
+- update bio link
+- prepare 7 days of content
+- set DM reply template
+- publish launch story and reel
+
+Recommended order statuses:
+pending
+pending-confirmation
+payment-initialized
+paid
+processing
+out-for-delivery
+delivered
+cancelled

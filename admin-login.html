@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | FreshCatch NG</title>
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script>document.documentElement.classList.add("js-enabled");</script>
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="brand">
+        <img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" onerror="this.style.display='none';this.parentElement.classList.add('brand--text-only')" />
+        <span>FreshCatch Admin</span>
+      </div>
+      <h1>Admin Login</h1>
+      <p class="muted">Sign in with your admin email and password. This uses Supabase Auth.</p>
+      <div id="authMessage" class="notice hidden"></div>
+      <div class="auth-row">
+        <input id="email" type="email" placeholder="Admin email" />
+        <input id="password" type="password" placeholder="Password" />
+        <div class="top-actions">
+          <button class="btn btn-primary" id="loginBtn">Log in</button>
+          <button class="btn btn-outline" id="signupBtn">Create admin account</button>
+        </div>
+      </div>
+      <p class="auth-help">For first setup, create an admin account here, then use Supabase Auth settings to restrict who can sign in.</p>
+      <p class="auth-help"><a href="./index.html">Back to storefront</a></p>
+    </div>
+  </div>
+  <script src="./admin-auth.js"></script>
+</body>
+</html>

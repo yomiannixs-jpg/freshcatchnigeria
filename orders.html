@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders | FreshCatch NG</title>
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="./config.js"></script>
+</head>
+<body>
+<header><div class="container"><nav>
+  <a class="brand" href="./index.html"><img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" /><span>FreshCatch NG</span></a>
+  <div class="nav-links"><a href="./index.html">Home</a><a href="./track.html">Track Order</a></div>
+</nav></div></header>
+
+<section class="hero" style="padding-top:40px"><div class="container">
+  <div class="track-card">
+    <div class="badge">Order History</div>
+    <h1 style="font-size:clamp(2rem,4vw,3.2rem)">View your past orders</h1>
+    <p class="muted">Enter your phone number or email to fetch your recent orders.</p>
+    <div style="display:grid;gap:12px;max-width:520px">
+      <input id="ordersPhone" placeholder="Phone number" />
+      <input id="ordersEmail" placeholder="Email (optional)" />
+      <button id="fetchOrdersBtn" class="btn btn-primary">Fetch Orders</button>
+    </div>
+    <div id="ordersResult" class="track-result" style="display:block;margin-top:16px">No orders loaded yet.</div>
+  </div>
+</div></section>
+<script>
+async function fetchOrders() {
+  const phone = document.getElementById('ordersPhone').value.trim();
+  const email = document.getElementById('ordersEmail').value.trim();
+  const result = document.getElementById('ordersResult');
+  if (!phone && !email) {
+    result.innerHTML = '<p>Enter your phone number or email.</p>';
+    return;
+  }
+  result.innerHTML = '<p>Loading...</p>';
+  try {
+    const res = await fetch(`/api/customer-orders?phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}`);
+    const data = await res.json();
+    const orders = data.orders || [];
+    if (!orders.length) {
+      result.innerHTML = '<p>No orders found.</p>';
+      return;
+    }
+    result.innerHTML = orders.map(o => `
+      <div class="card" style="margin-bottom:12px">
+        <div class="status-pill">${o.status || 'pending'}</div>
+        <p><strong>Reference:</strong> ${o.reference}</p>
+        <p><strong>Amount:</strong> ₦${Number(o.amount_ngn || 0).toLocaleString()}</p>
+        <p><strong>Delivery Zone:</strong> ${o.delivery_zone || ''}</p>
+        <p><strong>Payment Status:</strong> ${o.payment_status || ''}</p>
+        <p><a class="btn btn-outline" href="./track.html?reference=${encodeURIComponent(o.reference)}">Track</a></p>
+      </div>
+    `).join('');
+  } catch (e) {
+    result.innerHTML = `<p>${e.message || 'Failed to load orders.'}</p>`;
+  }
+}
+document.getElementById('fetchOrdersBtn').addEventListener('click', fetchOrders);
+</script>
+</body>
+</html>

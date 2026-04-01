@@ -1,0 +1,25 @@
+FreshCatch NG Paystack Live Connection Guide
+
+What is already prepared:
+- client checkout flow that calls a Netlify function
+- server-side Paystack initialize function
+- server-side Paystack verify function
+- callback flow to the track order page
+
+What you must do:
+1. In Netlify, open Site configuration -> Environment variables.
+2. Add:
+   - PAYSTACK_SECRET_KEY = your live or test secret key
+   - SUPABASE_URL = your Supabase project URL
+   - SUPABASE_SERVICE_ROLE_KEY = your Supabase service role key
+3. Redeploy the site after saving variables.
+4. In the frontend config file, set your Supabase public URL and anon key.
+5. Test with Paystack test credentials first.
+6. Confirm that after payment, Paystack redirects to:
+   /track.html?reference=YOUR_REFERENCE
+7. Open the track page and confirm the order status becomes paid.
+
+Important:
+- Paystack initialize must happen from your server with your secret key.
+- Verification should also happen server-side using the transaction reference.
+- Do not expose your secret key in frontend code.

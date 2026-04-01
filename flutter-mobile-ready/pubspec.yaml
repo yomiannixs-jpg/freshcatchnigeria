@@ -1,0 +1,15 @@
+
+name: freshcatch_ng_mobile
+description: FreshCatch NG mobile-ready starter
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

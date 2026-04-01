@@ -1,0 +1,7 @@
+{
+  "app.js": "OK",
+  "api/functions/create-order.js": "OK",
+  "api/functions/init-paystack.js": "OK",
+  "api/functions/verify-paystack.js": "OK",
+  "server.js": "OK"
+}

@@ -1,0 +1,10 @@
+Recommended next security hardening
+
+Current state:
+- admin page requires Supabase Auth session in browser
+- admin Netlify functions still rely on deployment secrecy
+
+Recommended next step:
+- pass Supabase access token from frontend to admin Netlify functions
+- validate JWT server-side in each admin function
+- optionally restrict admin emails or roles in a profiles/admins table

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rider Portal | FreshCatch NG</title>
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script>document.documentElement.classList.add("js-enabled");</script>
+</head>
+<body>
+  <div class="rider-portal-shell">
+    <div class="rider-portal-card">
+      <div class="brand">
+        <img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" />
+        <span>FreshCatch Rider Portal</span>
+      </div>
+      <h1 style="font-size:28px;margin:10px 0;color:#0b4f6c">Share live GPS location</h1>
+      <p class="muted">Riders can share their location so the admin dashboard can display live positions.</p>
+      <div id="riderPortalMsg" class="notice">Enter the generated Rider ID from Admin or Supabase, then start location sharing.</div>
+      <div class="auth-row">
+        <input id="portalRiderId" placeholder="Rider ID" />
+        <input id="portalRiderStatus" placeholder="Status (available / busy / offline)" value="busy" />
+        <div class="top-actions">
+          <button class="btn btn-primary" id="startGpsBtn">Start sharing</button>
+          <button class="btn btn-outline" id="stopGpsBtn">Stop sharing</button>
+        </div>
+      </div>
+      <div class="rider-status">
+        <div class="stat-chip">GPS <span id="gpsState">Idle</span></div>
+        <div class="stat-chip">Last update <span id="gpsLastSeen">Never</span></div>
+      </div>
+      <p class="small-note">How to get your Rider ID: create the rider in Admin → Riders, then use Copy ID or Open Portal. You can also copy the id from the riders table in Supabase.</p><p class="small-note">For mobile devices, the browser will ask for location permission. Keep this page open while delivering.</p>
+      <p class="small-note"><a href="./admin.html">Back to admin</a></p>
+    </div>
+  </div>
+  <script src="./rider-portal.js"></script>
+</body>
+</html>

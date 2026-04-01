@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Order | FreshCatch NG</title>
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script>document.documentElement.classList.add("js-enabled");</script>
+</head>
+<body>
+<div class="page-transition" id="pageTransition"></div>
+<header><div class="container"><nav>
+  <a class="brand" href="./index.html" onclick="animatePageLink(event, './index.html')"><img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" /><span>FreshCatch NG</span></a>
+  <div class="nav-links"><a href="./index.html" onclick="animatePageLink(event, './index.html')">Home</a><a href="./index.html#products" onclick="animatePageLink(event, './index.html#products')">Products</a><a href="./payment-success.html">Payment Status</a><a class="btn btn-primary" href="https://wa.me/2348087156505?text=Hi%20I%20want%20to%20track%20my%20order" target="_blank">WhatsApp</a></div>
+</nav></div></header>
+
+<section class="hero" style="padding-top:40px"><div class="container">
+  <div class="track-card fade-up">
+    <div class="badge">Track Order</div>
+    <h1 style="font-size:clamp(2rem,4vw,3.2rem)">Check your order status</h1>
+    <p class="muted">Enter your order or payment reference below. This page checks the Supabase orders table first and then tries Paystack verification for payment references.</p>
+    <div style="display:grid;gap:12px;max-width:520px">
+      <input id="referenceInput" placeholder="Enter order reference e.g. FC-123456789">
+      <button id="trackBtn" class="btn btn-primary">Track Order</button>
+    </div>
+    <div id="trackResult" class="track-result"></div>
+  </div>
+</div></section>
+
+<footer><div class="container"><p><strong>FreshCatch NG</strong> · WhatsApp: 08087156505 · Instagram: @freshcatchng</p></div></footer>
+<script src="./app.js"></script>
+</body>
+</html>

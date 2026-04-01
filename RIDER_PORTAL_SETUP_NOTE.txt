@@ -1,0 +1,6 @@
+Included in this build:
+- backend-schema.sql added to app root
+- admin dashboard now shows Rider ID
+- Copy Rider ID button added
+- Open Rider Portal button added
+- rider-portal.html now accepts ?rider_id=... and prefills the field

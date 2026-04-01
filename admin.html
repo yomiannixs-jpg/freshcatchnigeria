@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshCatch NG Admin Dashboard</title>
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#0b4f6c" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./config.js"></script>
+  <script>document.documentElement.classList.add("js-enabled");</script>
+</head>
+<body>
+  <div class="wrap">
+    <aside>
+      <div class="brand">
+        <img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" onerror="this.style.display='none';this.parentElement.classList.add('brand--text-only')" />
+        <span>FreshCatch Admin</span>
+      </div>
+      <div class="nav">
+        <a href="#" class="active" data-panel="ordersPanel">Orders</a>
+        <a href="#" data-panel="customersPanel">Customers</a>
+        <a href="#" data-panel="analyticsPanel">Analytics</a>
+        <a href="#" data-panel="vendorsPanel">Vendors</a>
+        <a href="#" data-panel="ridersPanel">Riders</a>
+        <a href="#" data-panel="inventoryPanel">Inventory</a>
+        <a href="#" data-panel="pricesPanel">Product Prices</a>
+        <a href="#" data-panel="settingsPanel">Settings</a>
+        <a href="./index.html">Storefront</a>
+        <a href="./rider-portal.html">Rider Portal</a>
+      </div>
+    </aside>
+    <main>
+      <div class="topbar">
+        <div>
+          <h1 style="margin:0;color:#0b4f6c">Admin Dashboard</h1>
+          <p class="muted" style="margin:6px 0 0">Manage orders, update statuses, and monitor sales with a cleaner premium dashboard.</p>
+        </div>
+        <div class="top-actions">
+          <span id="adminUser" class="muted"></span>
+          <button class="btn btn-outline" id="logoutBtn">Log out</button>
+        </div>
+      </div>
+
+      <div id="adminNotice" class="notice hidden"></div>
+
+      <div class="grid">
+        <div class="card"><div class="muted">Total orders</div><div class="metric" id="metricOrders">0</div></div>
+        <div class="card"><div class="muted">Revenue</div><div class="metric" id="metricRevenue">₦0</div></div>
+        <div class="card"><div class="muted">Paid orders</div><div class="metric" id="metricPaid">0</div></div>
+        <div class="card"><div class="muted">Pending orders</div><div class="metric" id="metricPending">0</div></div>
+      </div>
+
+      <div class="grid" id="analyticsStarter">
+        <div class="card"><div class="muted">Conversion status</div><div class="metric">Live</div><div class="muted">Storefront, tracking, and admin connected</div></div>
+        <div class="card"><div class="muted">Fulfilment flow</div><div class="metric">Ready</div><div class="muted">Update orders from pending to delivered</div></div>
+        <div class="card"><div class="muted">Payment pipeline</div><div class="metric">Paystack</div><div class="muted">Initialize and verify through secure server routes</div></div>
+        <div class="card"><div class="muted">Growth channel</div><div class="metric">Instagram</div><div class="muted">Use the funnel plan included in the app pack</div></div>
+      </div>
+
+      <section id="ordersPanel" class="panel active">
+        <h2 class="section-title">Orders</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Items</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </section>
+
+      <section id="customersPanel" class="panel">
+        <div class="card">
+          <h2 class="section-title">Customers</h2>
+          <p class="muted">Starter customer panel. Expand this with segmentation, repeat buyers, and lifetime value.</p>
+        </div>
+      </section>
+
+      <section id="analyticsPanel" class="panel">
+        <div class="card">
+          <h2 class="section-title">Analytics</h2>
+          <p class="muted">Starter analytics live above. Extend with charts for daily orders, top products, and conversion rates.</p>
+        </div>
+      </section>
+
+      
+      <section id="vendorsPanel" class="panel">
+        <div class="split-2">
+          <div class="panel-card">
+            <h2 class="section-title">Add Vendor</h2>
+            <div class="form-grid">
+              <input id="vendorName" placeholder="Vendor name" />
+              <input id="vendorPhone" placeholder="Phone number" />
+              <input id="vendorEmail" placeholder="Email" />
+              <input id="vendorLocation" placeholder="Location / market" />
+              <input id="vendorSpecialty" class="full" placeholder="Specialty e.g. Catfish, prawns, crabs" />
+              <button class="btn btn-primary full" id="saveVendorBtn">Save vendor</button>
+            </div>
+          </div>
+          <div class="panel-card">
+            <h2 class="section-title">Vendor Directory</h2>
+            <p class="small-note">Create a rider first, then use Copy ID or Open Portal from the rider list below.</p><table class="list-table">
+              <thead>
+                <tr><th>Name</th><th>Phone</th><th>Specialty</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="vendorsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+
+      
+      <section id="ridersPanel" class="panel">
+        <div class="split-2">
+          <div class="panel-card">
+            <h2 class="section-title">Assign Rider</h2>
+            <div class="form-grid">
+              <input id="riderName" placeholder="Rider name" />
+              <input id="riderPhone" placeholder="Phone number" />
+              <input id="riderBike" placeholder="Bike / plate number" />
+              <select id="riderStatus">
+                <option value="available">available</option>
+                <option value="busy">busy</option>
+                <option value="offline">offline</option>
+              </select>
+              <button class="btn btn-primary full" id="saveRiderBtn">Save rider</button>
+            </div>
+            <div style="height:12px"></div>
+            <a class="btn btn-outline" href="./rider-portal.html">Open rider portal</a>
+          </div>
+          <div class="panel-card map-card">
+            <h2 class="section-title">Rider GPS Tracking</h2>
+            <div id="riderMap"></div>
+            <div style="height:14px"></div>
+            <p id="riderPortalHelp" class="small-note">Create a rider first, then copy the Rider ID or open the Rider Portal link directly from the table below.</p>
+            <table class="list-table">
+              <thead>
+                <tr><th>Name</th><th>Phone</th><th>Status</th><th>Last seen</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="ridersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+
+      
+      <section id="inventoryPanel" class="panel">
+        <div class="inventory-layout">
+          <div class="inventory-card">
+            <h2 class="section-title">Vendor Inventory</h2>
+            <div class="form-grid">
+              <select id="inventoryVendor" class="vendor-select full">
+                <option value="">Select vendor</option>
+              </select>
+              <input id="inventoryProduct" placeholder="Product name" />
+              <input id="inventoryQty" placeholder="Quantity" />
+              <input id="inventoryUnit" placeholder="Unit e.g. kg, basket" />
+              <input id="inventoryPrice" placeholder="Unit price (₦)" />
+              <select id="inventoryStatus">
+                <option value="in-stock">in-stock</option>
+                <option value="low-stock">low-stock</option>
+                <option value="out-of-stock">out-of-stock</option>
+              </select>
+              <button class="btn btn-primary full" id="saveInventoryBtn">Save inventory</button>
+            </div>
+            <p class="small-note">Assign inventory to a specific vendor so you can track available seafood stock per supplier.</p>
+          </div>
+          <div class="inventory-card">
+            <h2 class="section-title">Inventory List</h2>
+            <table class="list-table">
+              <thead>
+                <tr><th>Vendor</th><th>Product</th><th>Stock</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="inventoryBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="pricesPanel" class="panel">
+        <div class="inventory-layout">
+          <div class="inventory-card">
+            <h2 class="section-title">Product Price Manager</h2>
+            <p class="small-note">Update product prices here without editing code. When Supabase is configured, changes save to the shared product price table and sync across devices; otherwise they fall back to browser storage.</p>
+            <div class="form-grid">
+              <input id="priceSearch" class="full" placeholder="Search product name" />
+              <button class="btn btn-primary" id="savePricesBtn">Save price changes</button>
+              <button class="btn btn-outline" id="resetPricesBtn" type="button">Reset to default prices</button>
+              <button class="btn btn-outline full" id="exportPricesBtn" type="button">Export price list JSON</button>
+            </div>
+          </div>
+          <div class="inventory-card">
+            <h2 class="section-title">Editable Product Prices</h2>
+            <table class="list-table">
+              <thead>
+                <tr><th>Product</th><th>Unit</th><th>Price (₦)</th><th>Status</th></tr>
+              </thead>
+              <tbody id="pricesBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="settingsPanel" class="panel">
+        <div class="card">
+          <h2 class="section-title">Settings</h2>
+          <p class="muted">Recommended next steps: role-based access, delivery fee rules, vendor management, and notifications.</p>
+        </div>
+      </section>
+          <div id="toastStack" class="toast-stack"></div>
+    </main>
+  </div>
+
+<script src="./admin-auth.js"></script>
+<script src="./admin-dashboard.js"></script>
+</body>
+</html>

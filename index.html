@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshCatch NG | Order Fresh Seafood in Lagos</title>
+  <meta name="description" content="Order fresh seafood in Lagos with cart, checkout, Paystack payment, and database-backed order tracking." />
+  <link rel="icon" href="./assets/freshcatch-logo-trimmed.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#0b4f6c" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script>document.documentElement.classList.add("js-enabled");</script>
+</head>
+<body>
+<div class="page-transition" id="pageTransition"></div>
+<div class="overlay" id="modalOverlay"></div>
+<div class="modal" id="infoModal"><button class="modal-close" onclick="closeModal()">Close ✕</button><div class="modal-body"></div></div>
+
+<header><div class="container"><nav>
+  <a class="brand" href="./index.html"><img src="./assets/freshcatch-logo-trimmed.png" alt="FreshCatch NG logo" onerror="this.style.display='none';this.parentElement.classList.add('brand--text-only')" /><span>FreshCatch NG</span></a>
+  <div class="nav-links">
+    <a href="#products">Products</a><a href="#how">How it works</a><a href="#checkout">Checkout</a>
+    <a href="./orders.html">My Orders</a><a href="./track.html" onclick="animatePageLink(event, './track.html')">Track Order</a>
+        <a href="./admin-login.html" onclick="animatePageLink(event, './admin-login.html')">Admin</a>
+    <a class="btn btn-primary" href="https://wa.me/2348087156505?text=Hi%20I%20want%20to%20order%20seafood" target="_blank">WhatsApp</a>
+  </div>
+</nav></div></header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <div class="premium-hero fade-up">
+      <img src="./assets/fish-real/tilapia.png" alt="Fresh fish underwater" class="premium-hero-image" />
+      <div class="premium-hero-overlay"></div>
+      <div class="premium-hero-content">
+        <div class="badge">Same-day delivery in selected Lagos zones</div>
+        <h1>Order Fresh Seafood in Lagos</h1>
+        <p class="muted premium-hero-copy">FreshCatch NG helps households and restaurants order trusted seafood with fast checkout, secure payments, and reliable delivery.</p>
+        <div class="premium-hero-actions">
+          <a class="btn btn-primary pulse" href="#products">Start Order</a>
+          <a class="btn btn-outline premium-hero-outline" href="./track.html" onclick="animatePageLink(event, './track.html')">Track Order</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="products"><div class="container">
+  <h2 class="section-title fade-up">Build Your Order</h2><p class="muted fade-up">Add seafood to cart, review totals, and check out below.</p>
+  <div class="layout">
+    <div><div class="grid-3" id="productGrid"></div></div>
+    <aside class="cart-panel" id="checkout"><div class="card fade-up">
+      <h3 style="margin-top:0;color:#0b4f6c">Your Cart</h3>
+      <div id="emptyCart" class="muted small">No items added yet.</div><div class="cart-list" id="cartList"></div>
+      <div class="summary"><div><span>Subtotal</span><strong id="subtotal">₦0</strong></div><div><span>Delivery</span><strong id="delivery">₦2,000</strong></div><div><span>Total</span><strong id="total">₦2,000</strong></div></div>
+      <div style="margin-top:10px;display:grid;gap:8px">
+        <input id="customerName" placeholder="Full name">
+        <input id="customerPhone" placeholder="Phone number">
+        <input id="customerEmail" placeholder="Email for payment receipt">
+        <input id="customerAddress" placeholder="Delivery address">
+        <select id="deliveryZone">
+          <option value="2000|Lagos Mainland">Lagos Mainland – ₦2,000</option>
+          <option value="2500|Ikeja / Yaba / Surulere">Ikeja / Yaba / Surulere – ₦2,500</option>
+          <option value="3000|Lagos Island">Lagos Island – ₦3,000</option>
+          <option value="3500|Lekki / Ajah">Lekki / Ajah – ₦3,500</option>
+        </select>
+        <select id="paymentMethod"><option value="whatsapp">WhatsApp checkout</option><option value="paystack">Paystack</option></select>
+      </div>
+      <div style="display:grid;gap:8px;margin-top:10px"><button class="btn btn-primary" onclick="checkout()">Checkout</button><button class="btn btn-secondary" onclick="clearCart()">Clear Cart</button></div>
+      <p class="small muted" style="margin-top:10px">Supabase stores orders. Paystack uses secure server routes with your secret key. Fill in config.js and Render environment variables before deployment.</p>
+    </div></aside>
+  </div>
+</div></section>
+
+<section id="how"><div class="container">
+  <h2 class="section-title fade-up">How it Works</h2>
+  <div class="grid-4">
+    <a class="step-link fade-up" href="#" onclick="openModal('choose'); return false;"><div class="card step-card"><h3>Choose</h3><p>Pick your seafood and add quantity.</p></div></a>
+    <a class="step-link fade-up" href="#" onclick="openModal('review'); return false;"><div class="card step-card"><h3>Review</h3><p>Check your cart and delivery details.</p></div></a>
+    <a class="step-link fade-up" href="#" onclick="openModal('pay'); return false;"><div class="card step-card"><h3>Pay</h3><p>Use WhatsApp or secure Paystack checkout.</p></div></a>
+    <a class="step-link fade-up" href="#" onclick="openModal('receive'); return false;"><div class="card step-card"><h3>Receive</h3><p>FreshCatch NG confirms and delivers.</p></div></a>
+  </div>
+</div></section>
+
+<section><div class="container"><div class="cta fade-up">
+  <h2 style="margin:0 0 10px">Instagram Auto-Orders Starter</h2>
+  <p style="margin:0 auto 16px;max-width:740px">This build still includes your Instagram to WhatsApp order flow while the main site now supports richer checkout and tracking.</p>
+  <a class="btn btn-primary" href="https://wa.me/2348087156505?text=Hi%20I%20came%20from%20Instagram%20and%20want%20to%20order%20seafood" target="_blank">Instagram to WhatsApp Order Link</a>
+</div></div></section>
+</main>
+
+<footer><div class="container"><p><strong>FreshCatch NG</strong> · WhatsApp: 08087156505 · Instagram: @freshcatchng</p></div></footer>
+<script src="./app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

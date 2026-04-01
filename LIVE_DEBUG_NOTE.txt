@@ -1,0 +1,29 @@
+FreshCatch NG live blank page fix
+
+Root cause found:
+- app.js had a fatal JavaScript syntax error:
+  async async function checkout()
+
+Why that broke the live site:
+- the browser stops executing app.js
+- products never render
+- cart never initializes
+- the page looks blank except for static layout
+
+What was fixed:
+- corrected the checkout function declaration
+- validated main JavaScript files with node --check
+
+Next step:
+- redeploy this package on Render
+- hard refresh the browser after deploy
+
+
+Syntax check results:
+{
+  "app.js": "OK",
+  "admin-auth.js": "OK",
+  "admin-dashboard.js": "OK",
+  "rider-portal.js": "OK",
+  "server.js": "OK"
+}

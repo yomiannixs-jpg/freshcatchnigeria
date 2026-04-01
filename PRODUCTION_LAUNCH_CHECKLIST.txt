@@ -1,0 +1,1 @@
+Run backend-schema.sql, set Render env vars, update config.js, redeploy, test checkout/admin/tracking/rider.
